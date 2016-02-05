@@ -22,17 +22,17 @@ resource "wakamevdc_instance" "web_server" {
   memory_size = 512
   image_id = "${var.web_image}"
   hypervisor = "kvm"
-  ssh_key_id = "${var.ssh_key_id}"
+  ssh_key_id = "${var.key_name}"
 
   vif {
-    network_id = "${var.private_network}"
+    network_id = "${element(split(", ", var.subnet_ids), 0)}"
     security_groups = [
       "${var.shared_security_group}",
       "${wakamevdc_security_group.web_security_group.id}"
     ]
   }
   vif {
-    network_id = "${var.public_network}"
+    network_id = "${var.global_network}"
     security_groups = [
       "${var.shared_security_group}",
       "${wakamevdc_security_group.web_security_group.id}"
@@ -47,10 +47,10 @@ resource "wakamevdc_instance" "ap_server" {
   memory_size = 512
   image_id = "${var.ap_image}"
   hypervisor = "kvm"
-  ssh_key_id = "${var.ssh_key_id}"
+  ssh_key_id = "${var.key_name}"
 
   vif {
-    network_id = "${var.private_network}"
+    network_id = "${element(split(", ", var.subnet_ids), 0)}"
     security_groups = [
       "${var.shared_security_group}",
       "${wakamevdc_security_group.ap_security_group.id}"
@@ -65,10 +65,10 @@ resource "wakamevdc_instance" "db_server" {
   memory_size = 512
   image_id = "${var.db_image}"
   hypervisor = "kvm"
-  ssh_key_id = "${var.ssh_key_id}"
+  ssh_key_id = "${var.key_name}"
 
   vif {
-    network_id = "${var.private_network}"
+    network_id = "${element(split(", ", var.subnet_ids), 0)}"
     security_groups = [
       "${var.shared_security_group}",
       "${wakamevdc_security_group.db_security_group.id}"

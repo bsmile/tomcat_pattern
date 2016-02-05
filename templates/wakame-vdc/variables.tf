@@ -1,13 +1,14 @@
-variable "private_network" {
+variable "global_network" {
   description = "Network ID which is created by common network pattern."
+  default = "nw-global"
 }
-variable "public_network" {
+variable "subnet_ids" {
   description = "Network ID which is created by common network pattern."
 }
 variable "shared_security_group" {
   description = "SecurityGroup ID which is created by common network pattern."
 }
-variable "ssh_key_id" {
+variable "key_name" {
   description = "Name of an existing KeyPair to enable SSH access to the instances."
 }
 variable "web_image" {
@@ -18,4 +19,16 @@ variable "ap_image" {
 }
 variable "db_image" {
   description = "[computed] DBServer Image Id. This parameter is automatically filled by CloudConductor."
+}
+variable "web_instance_type" {
+  description = "WebServer instance type"
+  default = "t2.small"
+}
+variable "ap_instance_type" {
+  description = "ApServer instance type"
+  default = "t2.small"
+}
+variable "db_instance_type" {
+  description = "DbServer instance type"
+  default = "t2.small"
 }
