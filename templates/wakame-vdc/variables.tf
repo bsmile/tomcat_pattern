@@ -1,5 +1,5 @@
 variable "global_network" {
-  description = "Network ID which is created by common network pattern."
+  description = "Global Network ID to reach internet on Wakame-vdc"
   default = "nw-global"
 }
 variable "subnet_ids" {
