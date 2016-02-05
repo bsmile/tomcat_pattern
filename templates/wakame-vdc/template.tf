@@ -41,6 +41,7 @@ resource "wakamevdc_instance" "web_server" {
 }
 
 resource "wakamevdc_instance" "ap_server" {
+  depends_on = ["wakamevdc_instance.web_server"]
   display_name = "APServer"
   cpu_cores = 1
   memory_size = 512
@@ -58,6 +59,7 @@ resource "wakamevdc_instance" "ap_server" {
 }
 
 resource "wakamevdc_instance" "db_server" {
+  depends_on = ["wakamevdc_instance.web_server"]
   display_name = "DBServer"
   cpu_cores = 1
   memory_size = 512
