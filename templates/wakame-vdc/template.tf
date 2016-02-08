@@ -25,14 +25,14 @@ resource "wakamevdc_instance" "web_server" {
   ssh_key_id = "${var.key_name}"
 
   vif {
-    network_id = "${element(split(", ", var.subnet_ids), 0)}"
+    network_id = "${var.global_network}"
     security_groups = [
       "${var.shared_security_group}",
       "${wakamevdc_security_group.web_security_group.id}"
     ]
   }
   vif {
-    network_id = "${var.global_network}"
+    network_id = "${element(split(", ", var.subnet_ids), 0)}"
     security_groups = [
       "${var.shared_security_group}",
       "${wakamevdc_security_group.web_security_group.id}"
@@ -49,6 +49,12 @@ resource "wakamevdc_instance" "ap_server" {
   hypervisor = "kvm"
   ssh_key_id = "${var.key_name}"
 
+  vif {
+    network_id = "${var.global_network}"
+    security_groups = [
+      "${var.shared_security_group}",
+    ]
+  }
   vif {
     network_id = "${element(split(", ", var.subnet_ids), 0)}"
     security_groups = [
@@ -68,6 +74,12 @@ resource "wakamevdc_instance" "db_server" {
   ssh_key_id = "${var.key_name}"
 
   vif {
+    network_id = "${var.global_network}"
+    security_groups = [
+      "${var.shared_security_group}",
+    ]
+  }
+  vif {
     network_id = "${element(split(", ", var.subnet_ids), 0)}"
     security_groups = [
       "${var.shared_security_group}",
@@ -76,10 +88,10 @@ resource "wakamevdc_instance" "db_server" {
   }
 }
 
-output "cluster_addresses" {
+output "frontend_addresses" {
   value = "${wakamevdc_instance.web_server.vif.0.ip_address}, ${wakamevdc_instance.ap_server.vif.0.ip_address}, ${wakamevdc_instance.db_server.vif.0.ip_address}"
 }
 
-output "frontend_addresses" {
-  value = "${wakamevdc_instance.web_server.vif.1.ip_address}"
+output "cluster_addresses" {
+  value = "${wakamevdc_instance.web_server.vif.1.ip_address}, ${wakamevdc_instance.ap_server.vif.1.ip_address}, ${wakamevdc_instance.db_server.vif.1.ip_address}"
 }
