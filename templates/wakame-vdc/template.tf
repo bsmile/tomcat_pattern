@@ -52,7 +52,7 @@ resource "wakamevdc_instance" "ap_server" {
   vif {
     network_id = "${var.global_network}"
     security_groups = [
-      "${var.shared_security_group}",
+      "${var.shared_security_group}"
     ]
   }
   vif {
@@ -76,7 +76,7 @@ resource "wakamevdc_instance" "db_server" {
   vif {
     network_id = "${var.global_network}"
     security_groups = [
-      "${var.shared_security_group}",
+      "${var.shared_security_group}"
     ]
   }
   vif {
