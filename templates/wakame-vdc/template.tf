@@ -88,7 +88,11 @@ resource "wakamevdc_instance" "db_server" {
   }
 }
 
-output "frontend_addresses" {
+output "frontend_address" {
+  value = "${wakamevdc_instance.web_server.vif.0.ip_address}"
+}
+
+output "consul_addresses" {
   value = "${wakamevdc_instance.web_server.vif.0.ip_address}, ${wakamevdc_instance.ap_server.vif.0.ip_address}, ${wakamevdc_instance.db_server.vif.0.ip_address}"
 }
 
